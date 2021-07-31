@@ -1,46 +1,65 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+} from 'react-native';
 import logo from '../../../assets/images/logo-pokemon.png';
 import {Bold, ExtraBold, Light, Regular, SemiBold} from '../../../utils/fonts';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const menu = [
   {
     id: 1,
     title: 'Pokedex',
     hex_color: '#62d5b4',
-    navigate: 'PokemonList',
   },
   {
     id: 2,
     title: 'Items',
     hex_color: '#f6bd20',
-    navigate: 'ItemList',
   },
 ];
 
-const HomeScreen = props => {
+const PokemonList = props => {
+  const renderPokemon = ({item}) => (
+    <TouchableOpacity
+      key={item?.id}
+      style={styles.menuContent(item?.hex_color)}>
+      <Text style={styles.titleMenu}>{item?.title}</Text>
+      <Image source={logo} style={styles.logoMenu} />
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>What Pokémon are you looking for?</Text>
+        <View style={styles.contentHeader}>
+          <TouchableOpacity onPress={() => props.navigation.goBack()}>
+            <Icon name="arrowleft" size={30} />
+          </TouchableOpacity>
+
+          <Text style={styles.title}>Pokédex</Text>
+        </View>
         <Image source={logo} style={styles.logo} />
       </View>
-      <View style={styles.menuContainer}>
-        {menu.map(item => (
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate(item?.navigate)}
-            key={item?.id}
-            style={styles.menuContent(item?.hex_color)}>
-            <Text style={styles.titleMenu}>{item?.title}</Text>
-            <Image source={logo} style={styles.logoMenu} />
-          </TouchableOpacity>
-        ))}
-      </View>
+
+      <FlatList
+        numColumns={2}
+        data={menu}
+        keyExtractor={item => item?.id?.toString()}
+        renderItem={renderPokemon}
+        columnWrapperStyle={{justifyContent: 'space-between'}}
+        contentContainerStyle={styles.menuContainer}
+      />
     </View>
   );
 };
 
-export default HomeScreen;
+export default PokemonList;
 
 const styles = StyleSheet.create({
   container: {
@@ -51,6 +70,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: Bold,
     color: '#484848',
+  },
+  contentHeader: {
     width: '65%',
   },
   header: {
@@ -69,17 +90,15 @@ const styles = StyleSheet.create({
     height: 200,
   },
   menuContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     paddingHorizontal: 20,
-    marginTop: 40,
+    alignSelf: 'center',
+    paddingVertical: 20,
+    marginTop: 20,
     width: '100%',
-    height: '15%',
   },
   menuContent: color => ({
     backgroundColor: color,
-    width: '48%',
+    width: '47%',
     borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -93,6 +112,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     paddingLeft: 20,
+    marginHorizontal: 5,
   }),
   logoMenu: {
     position: 'absolute',
