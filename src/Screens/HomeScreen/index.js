@@ -3,12 +3,35 @@ import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
 import logo from '../../../assets/images/logo-pokemon.png';
 import {Bold, ExtraBold, Light, Regular, SemiBold} from '../../../utils/fonts';
 
+const menu = [
+  {
+    id: 1,
+    title: 'Pokedex',
+    hex_color: '#62d5b4',
+  },
+  {
+    id: 2,
+    title: 'Items',
+    hex_color: '#f6bd20',
+  },
+];
+
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Pokédex</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>What Pokémon are you looking for?</Text>
         <Image source={logo} style={styles.logo} />
+      </View>
+      <View style={styles.menuContainer}>
+        {menu.map(item => (
+          <TouchableOpacity
+            key={item?.id}
+            style={styles.menuContent(item?.hex_color)}>
+            <Text style={styles.titleMenu}>{item?.title}</Text>
+            <Image source={logo} style={styles.logoMenu} />
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );
@@ -19,18 +42,45 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f8fa',
+    backgroundColor: '#fff',
   },
   title: {
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: Bold,
     color: '#484848',
+    width: '65%',
   },
-  content: {
+  header: {
     width: '100%',
     backgroundColor: '#fff',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    paddingVertical: 20,
+    paddingLeft: 20,
+    height: '20%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    tintColor: '#f7f8fa',
+    resizeMode: 'contain',
+    width: 200,
+    height: 200,
+  },
+  menuContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginTop: 40,
+    width: '100%',
+    height: '15%',
+  },
+  menuContent: color => ({
+    backgroundColor: color,
+    width: '46%',
+    borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '100%',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -38,18 +88,19 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
-    paddingVertical: 20,
     paddingLeft: 20,
-  },
-  logo: {
-    tintColor: '#f7f8fa',
-    resizeMode: 'contain',
-    width: 200,
-    height: 200,
+  }),
+  logoMenu: {
     position: 'absolute',
-    top: -40,
-    right: -40,
+    right: -50,
+    tintColor: 'rgba(255,255,255,0.5)',
+    resizeMode: 'contain',
+    width: '100%',
+    height: '100%',
+  },
+  titleMenu: {
+    fontFamily: SemiBold,
+    color: '#fff',
   },
 });
