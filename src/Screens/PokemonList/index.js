@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -10,6 +10,10 @@ import {
 import logo from '../../../assets/images/logo-pokemon.png';
 import {Bold, ExtraBold, Light, Regular, SemiBold} from '../../../utils/fonts';
 import Icon from 'react-native-vector-icons/AntDesign';
+
+import {useDispatch, useSelector} from 'react-redux';
+
+import {getPokemon} from '../../redux/actions/PokemonListAction';
 
 const menu = [
   {
@@ -24,12 +28,26 @@ const menu = [
   },
 ];
 
+const uri_img =
+  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+
 const PokemonList = props => {
-  const renderPokemon = ({item}) => (
+  const dispatch = useDispatch();
+
+  const {pokemon, loading} = useSelector(state => state.pokemonListReducer);
+
+  useEffect(() => {
+    dispatch(getPokemon());
+  }, []);
+
+  const renderPokemon = ({item, index}) => (
     <TouchableOpacity
-      key={item?.id}
-      style={styles.menuContent(item?.hex_color)}>
-      <Text style={styles.titleMenu}>{item?.title}</Text>
+      style={styles.menuContent(item?.hex_color ? item?.hex_color : '#000')}>
+      <Text style={styles.titleMenu}>{item?.name}</Text>
+      <Image
+        source={{uri: `${uri_img}${index + 1}.png`}}
+        style={{width: 100, height: 100}}
+      />
       <Image source={logo} style={styles.logoMenu} />
     </TouchableOpacity>
   );
@@ -49,10 +67,13 @@ const PokemonList = props => {
 
       <FlatList
         numColumns={2}
-        data={menu}
-        keyExtractor={item => item?.id?.toString()}
+        data={pokemon}
+        keyExtractor={(item, i) => i.toString()}
         renderItem={renderPokemon}
-        columnWrapperStyle={{justifyContent: 'space-between'}}
+        columnWrapperStyle={{
+          justifyContent: 'space-between',
+          marginVertical: 10,
+        }}
         contentContainerStyle={styles.menuContainer}
       />
     </View>
@@ -117,7 +138,7 @@ const styles = StyleSheet.create({
   logoMenu: {
     position: 'absolute',
     right: -50,
-    tintColor: 'rgba(255,255,255,0.5)',
+    tintColor: 'rgba(255,255,255,0.2)',
     resizeMode: 'contain',
     width: '100%',
     height: '100%',
