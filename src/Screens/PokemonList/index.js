@@ -15,22 +15,6 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {getPokemon} from '../../redux/actions/PokemonListAction';
 
-const menu = [
-  {
-    id: 1,
-    title: 'Pokedex',
-    hex_color: '#62d5b4',
-  },
-  {
-    id: 2,
-    title: 'Items',
-    hex_color: '#f6bd20',
-  },
-];
-
-const uri_img =
-  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
-
 const PokemonList = props => {
   const dispatch = useDispatch();
 
@@ -44,10 +28,7 @@ const PokemonList = props => {
     <TouchableOpacity
       style={styles.menuContent(item?.hex_color ? item?.hex_color : '#000')}>
       <Text style={styles.titleMenu}>{item?.name}</Text>
-      <Image
-        source={{uri: `${uri_img}${index + 1}.png`}}
-        style={{width: 100, height: 100}}
-      />
+      <Image source={{uri: item?.image}} style={{width: 100, height: 100}} />
       <Image source={logo} style={styles.logoMenu} />
     </TouchableOpacity>
   );
