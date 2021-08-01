@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {getPokemon} from '../../redux/actions/PokemonListAction';
+import {getDetailPokemon} from '../../redux/actions/DetailPokemonAction';
 
 const PokemonList = props => {
   const dispatch = useDispatch();
@@ -24,13 +25,14 @@ const PokemonList = props => {
     dispatch(getPokemon());
   }, []);
 
-  const handleDetail = () => {
-    props.navigation.navigate('DetailPokemon');
+  const handleDetail = async id => {
+    await dispatch(getDetailPokemon(id));
+    await props.navigation.navigate('DetailPokemon');
   };
 
   const renderPokemon = ({item, index}) => (
     <TouchableOpacity
-      onPress={() => handleDetail()}
+      onPress={() => handleDetail(item?.name)}
       style={styles.menuContent(item?.hex_color ? item?.hex_color : '#000')}>
       <Text numberOfLines={1} style={styles.titleMenu}>
         {item?.name}
