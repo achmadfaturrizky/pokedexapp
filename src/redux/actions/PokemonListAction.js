@@ -8,6 +8,7 @@ const uri_img =
 export const getPokemon = () => {
   // redux-thunk returns a function with dispatch
   return (dispatch, getState) => {
+    dispatch({type: types.POKEMON_LIST_RESET});
     dispatch({type: types.POKEMON_LIST_PROCESS});
     api
       .get('pokemon')

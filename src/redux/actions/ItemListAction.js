@@ -8,6 +8,7 @@ const uri_img =
 export const getItem = () => {
   // redux-thunk returns a function with dispatch
   return (dispatch, getState) => {
+    dispatch({type: types.ITEM_LIST_RESET});
     dispatch({type: types.ITEM_LIST_PROCESS});
     api
       .get('item')
