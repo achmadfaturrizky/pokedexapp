@@ -15,6 +15,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {getItem} from '../../redux/actions/ItemListAction';
 import {getDetailItem} from '../../redux/actions/DetailItemAction';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const ItemList = props => {
   const dispatch = useDispatch();
@@ -29,6 +30,19 @@ const ItemList = props => {
     await dispatch(getDetailItem(id));
     await props.navigation.navigate('DetailItem');
   };
+
+  const loopingList = [0, 1, 2, 3, 4, 5];
+
+  const LoadingList = () => (
+    <SkeletonPlaceholder>
+      {loopingList?.map(i => (
+        <View key={i} style={styles.loadingContainer}>
+          <View style={styles.loadingContent} />
+          <View style={styles.loadingContent} />
+        </View>
+      ))}
+    </SkeletonPlaceholder>
+  );
 
   const renderPokemon = ({item, index}) => (
     <TouchableOpacity
@@ -54,19 +68,22 @@ const ItemList = props => {
         </View>
         <Image source={logo} style={styles.logo} />
       </View>
-
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        numColumns={2}
-        data={itemlist}
-        keyExtractor={(item, i) => i.toString()}
-        renderItem={renderPokemon}
-        columnWrapperStyle={{
-          justifyContent: 'space-between',
-          marginVertical: 10,
-        }}
-        contentContainerStyle={styles.menuContainer}
-      />
+      {loading ? (
+        <LoadingList />
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          data={itemlist}
+          keyExtractor={(item, i) => i.toString()}
+          renderItem={renderPokemon}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            marginVertical: 10,
+          }}
+          contentContainerStyle={styles.menuContainer}
+        />
+      )}
     </View>
   );
 };
@@ -147,5 +164,18 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: 'contain',
     flex: 1,
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginTop: 40,
+  },
+  loadingContent: {
+    width: 180,
+    height: 80,
+    borderRadius: 20,
   },
 });

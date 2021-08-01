@@ -75,8 +75,8 @@ const DetailPokemon = props => {
           </View>
           <Text style={styles.titleStats}>Base Stats</Text>
 
-          {pokemon?.stats?.map(item => (
-            <View style={styles.statsContent}>
+          {pokemon?.stats?.map((item, i) => (
+            <View key={i} style={styles.statsContent}>
               <Text style={styles.statText}>{item?.stat?.name}</Text>
               <Text style={styles.baseStatText}>{item?.base_stat}</Text>
               <ProgressBar

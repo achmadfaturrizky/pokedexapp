@@ -16,6 +16,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getPokemon} from '../../redux/actions/PokemonListAction';
 import {getDetailPokemon} from '../../redux/actions/DetailPokemonAction';
 
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+
 const PokemonList = props => {
   const dispatch = useDispatch();
 
@@ -29,6 +31,19 @@ const PokemonList = props => {
     await dispatch(getDetailPokemon(id));
     await props.navigation.navigate('DetailPokemon');
   };
+
+  const loopingList = [0, 1, 2, 3, 4, 5];
+
+  const LoadingList = () => (
+    <SkeletonPlaceholder>
+      {loopingList?.map(i => (
+        <View key={i} style={styles.loadingContainer}>
+          <View style={styles.loadingContent} />
+          <View style={styles.loadingContent} />
+        </View>
+      ))}
+    </SkeletonPlaceholder>
+  );
 
   const renderPokemon = ({item, index}) => (
     <TouchableOpacity
@@ -54,19 +69,22 @@ const PokemonList = props => {
         </View>
         <Image source={logo} style={styles.logo} />
       </View>
-
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        numColumns={2}
-        data={pokemon}
-        keyExtractor={(item, i) => i.toString()}
-        renderItem={renderPokemon}
-        columnWrapperStyle={{
-          justifyContent: 'space-between',
-          marginVertical: 10,
-        }}
-        contentContainerStyle={styles.menuContainer}
-      />
+      {loading ? (
+        <LoadingList />
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          data={pokemon}
+          keyExtractor={(item, i) => i.toString()}
+          renderItem={renderPokemon}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            marginVertical: 10,
+          }}
+          contentContainerStyle={styles.menuContainer}
+        />
+      )}
     </View>
   );
 };
@@ -147,5 +165,18 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: 'contain',
     flex: 1,
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginTop: 40,
+  },
+  loadingContent: {
+    width: 180,
+    height: 80,
+    borderRadius: 20,
   },
 });
