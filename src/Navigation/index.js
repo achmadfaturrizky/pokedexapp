@@ -11,6 +11,7 @@ import reducers from '../redux/reducers';
 import HomeScreen from '../Screens/HomeScreen';
 import PokemonList from '../Screens/PokemonList';
 import DetailPokemon from '../Screens/PokemonList/DetailPokemon';
+import ItemList from '../Screens/ItemList';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ export default function App() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="PokemonList" component={PokemonList} />
           <Stack.Screen name="DetailPokemon" component={DetailPokemon} />
+          <Stack.Screen name="ItemList" component={ItemList} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
