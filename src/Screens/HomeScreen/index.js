@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native';
 import logo from '../../../assets/images/logo-pokemon.png';
-import {Bold, ExtraBold, Light, Regular, SemiBold} from '../../../utils/fonts';
+import {Bold, SemiBold} from '../../../utils/fonts';
 
 const menu = [
   {

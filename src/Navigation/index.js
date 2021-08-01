@@ -8,6 +8,7 @@ import {createStore, applyMiddleware} from 'redux';
 import ReduxThunk from 'redux-thunk';
 import reducers from '../redux/reducers';
 
+import Splash from '../Screens/Splash';
 import HomeScreen from '../Screens/HomeScreen';
 import PokemonList from '../Screens/PokemonList';
 import DetailPokemon from '../Screens/PokemonList/DetailPokemon';
@@ -23,6 +24,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator headerMode={'none'}>
+          <Stack.Screen name="Splash" component={Splash} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="PokemonList" component={PokemonList} />
           <Stack.Screen name="DetailPokemon" component={DetailPokemon} />
