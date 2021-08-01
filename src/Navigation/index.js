@@ -12,6 +12,7 @@ import HomeScreen from '../Screens/HomeScreen';
 import PokemonList from '../Screens/PokemonList';
 import DetailPokemon from '../Screens/PokemonList/DetailPokemon';
 import ItemList from '../Screens/ItemList';
+import DetailItem from '../Screens/ItemList/DetailItem';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ export default function App() {
           <Stack.Screen name="PokemonList" component={PokemonList} />
           <Stack.Screen name="DetailPokemon" component={DetailPokemon} />
           <Stack.Screen name="ItemList" component={ItemList} />
+          <Stack.Screen name="DetailItem" component={DetailItem} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
