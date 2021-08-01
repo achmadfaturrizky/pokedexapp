@@ -24,8 +24,13 @@ const PokemonList = props => {
     dispatch(getPokemon());
   }, []);
 
+  const handleDetail = () => {
+    props.navigation.navigate('DetailPokemon');
+  };
+
   const renderPokemon = ({item, index}) => (
     <TouchableOpacity
+      onPress={() => handleDetail()}
       style={styles.menuContent(item?.hex_color ? item?.hex_color : '#000')}>
       <Text numberOfLines={1} style={styles.titleMenu}>
         {item?.name}
