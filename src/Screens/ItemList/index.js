@@ -13,16 +13,16 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import {useDispatch, useSelector} from 'react-redux';
 
-import {getPokemon} from '../../redux/actions/PokemonListAction';
+import {getItem} from '../../redux/actions/ItemListAction';
 import {getDetailPokemon} from '../../redux/actions/DetailPokemonAction';
 
 const ItemList = props => {
   const dispatch = useDispatch();
 
-  const {pokemon, loading} = useSelector(state => state.pokemonListReducer);
+  const {itemlist, loading} = useSelector(state => state.itemListReducer);
 
   useEffect(() => {
-    dispatch(getPokemon());
+    dispatch(getItem());
   }, []);
 
   const handleDetail = async id => {
@@ -42,6 +42,8 @@ const ItemList = props => {
     </TouchableOpacity>
   );
 
+  console.log('dfdfdf', itemlist);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -58,7 +60,7 @@ const ItemList = props => {
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={pokemon}
+        data={itemlist}
         keyExtractor={(item, i) => i.toString()}
         renderItem={renderPokemon}
         columnWrapperStyle={{
