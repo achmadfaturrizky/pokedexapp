@@ -8,7 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import logo from '../../../assets/images/logo-pokemon.png';
-import {Bold, ExtraBold, Light, Regular, SemiBold} from '../../../utils/fonts';
+import {Bold, SemiBold} from '../../../utils/fonts';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import {useDispatch, useSelector} from 'react-redux';
@@ -27,8 +27,10 @@ const PokemonList = props => {
   const renderPokemon = ({item, index}) => (
     <TouchableOpacity
       style={styles.menuContent(item?.hex_color ? item?.hex_color : '#000')}>
-      <Text style={styles.titleMenu}>{item?.name}</Text>
-      <Image source={{uri: item?.image}} style={{width: 100, height: 100}} />
+      <Text numberOfLines={1} style={styles.titleMenu}>
+        {item?.name}
+      </Text>
+      <Image source={{uri: item?.image}} style={styles.imagePokedex} />
       <Image source={logo} style={styles.logoMenu} />
     </TouchableOpacity>
   );
@@ -47,6 +49,7 @@ const PokemonList = props => {
       </View>
 
       <FlatList
+        showsVerticalScrollIndicator={false}
         numColumns={2}
         data={pokemon}
         keyExtractor={(item, i) => i.toString()}
@@ -113,13 +116,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    paddingLeft: 20,
+    paddingLeft: 10,
     marginHorizontal: 5,
+    justifyContent: 'space-between',
   }),
   logoMenu: {
     position: 'absolute',
     right: -50,
-    tintColor: 'rgba(255,255,255,0.2)',
+    tintColor: 'rgba(255,255,255,0.1)',
     resizeMode: 'contain',
     width: '100%',
     height: '100%',
@@ -127,5 +131,14 @@ const styles = StyleSheet.create({
   titleMenu: {
     fontFamily: SemiBold,
     color: '#fff',
+    textTransform: 'capitalize',
+    flex: 1,
+    maxWidth: 150,
+  },
+  imagePokedex: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+    flex: 1,
   },
 });
