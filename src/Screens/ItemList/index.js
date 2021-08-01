@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   loadingContent: {
-    width: 180,
+    width: 170,
     height: 80,
     borderRadius: 20,
   },
